@@ -1,8 +1,3 @@
-const token=jwt.sign({
-  id:user._id,
-  role:user.role
-},
-process.env.JWT_SECRET,{
-  expiresIn:"1d"
-});
+const generateAccessToken=require("../utils/generateRefreshTokens");
 
+const generateRefreshToken=require("../utils/generateRefreshTokens");
