@@ -3,7 +3,9 @@ const dotenv=require("dotenv");
 const emplyeeRoutes=require("./routes/employeeRoutes");
 const connectDB=require("./config/db");
 const loggerMiddleware=require("./middleware/loggerMiddleware");
+const errorMiddleware=require("./middleware/errorMiddleware");
 
+app.use(errorMiddleware);
 app.use(loggerMiddleware);
 
 dotenv.config();
