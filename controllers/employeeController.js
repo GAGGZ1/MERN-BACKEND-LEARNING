@@ -52,25 +52,26 @@ const createEmployees=async (req,res)=>{
 }
 
 //update employee
-const updateEmployee=(req,res)=>{
-  const id=parseInt(req.params.id);
+const updateEmployee=async (req,res)=>{
 
-  const employee=employees.find(emp=>emp.id===id);
-  if(!employee){
-    return res.status(404).json({
-      message:"Employee not found"
-    });
+  try{
+    const employee=await Employee.findByIdAndUpdate(
+      req.params.id,req.body,{
+        new:true
+      }
+    );
+    if(!employee){
+      return res.status(404).json({
+        message:"Employee not found"
+      })
+    }
+    res.json(employee);
   }
-
-  const {name,role,salary}=req.body;
-  employee.name=name|| employee.name;
-  employee.role=role|| employee.role;
-  employee.salary=salary||employee.salary;
-
-  res.json({
-    message:"Employee updated",
-    employee
-  });
+  catch(error){
+    res.status(500).json({
+      message:error.message
+    })
+  }
 };
 
 //Delete employee
