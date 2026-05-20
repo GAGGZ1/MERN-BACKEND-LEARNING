@@ -4,23 +4,23 @@ A backend learning project built using the MERN stack backend technologies to un
 
 ## Features Implemented
 
-### Employee Management REST API
+### 1. Employee Management REST API
 
 Designed and developed a RESTful API for an Employee Management System with complete CRUD operations.
 
-### MongoDB Integration
+### 2. MongoDB Integration
 
 Integrated MongoDB using Mongoose for efficient database modeling and data management.
 
-### Input Validation
+### 3. Input Validation
 
 Implemented request validation using middleware and `express-validator` to ensure clean and secure API requests.
 
-### Pagination
+### 4. Pagination
 
 Added offset-based pagination for efficiently handling and fetching large datasets.
 
-### JWT Authentication
+### 5. JWT Authentication
 
 Implemented JWT (JSON Web Token) based authentication for secure access to protected routes.
 
@@ -39,14 +39,14 @@ Implemented JWT (JSON Web Token) based authentication for secure access to prote
 
 ## API Features
 
-* Create Employee
-* Get All Employees
-* Get Employee By ID
-* Update Employee
-* Delete Employee
-* Pagination Support
-* Request Validation
-* Authentication & Authorization
+1. Create Employee
+2. Get All Employees
+3. Get Employee By ID
+4. Update Employee
+5. Delete Employee
+6. Pagination Support
+7. Request Validation
+8. Authentication & Authorization
 
 ---
 
@@ -54,25 +54,25 @@ Implemented JWT (JSON Web Token) based authentication for secure access to prote
 
 Through this project, I learned:
 
-* REST API design principles
-* Express middleware architecture
-* MongoDB and Mongoose operations
-* Authentication using JWT
-* Validation and error handling
-* Pagination implementation
-* Backend project structuring
+1. REST API design principles
+2. Express middleware architecture
+3. MongoDB and Mongoose operations
+4. Authentication using JWT
+5. Validation and error handling
+6. Pagination implementation
+7. Backend project structuring
 
 ---
 
 ## Future Improvements
 
-* Role-based authorization
-* Refresh tokens
-* Search and filtering
-* Sorting APIs
-* Rate limiting
-* Unit and integration testing
-* Docker deployment
+1. Role-based authorization
+2. Refresh tokens
+3. Search and filtering
+4. Sorting APIs
+5. Rate limiting
+6. Unit and integration testing
+7. Docker deployment
 
 ---
 
@@ -80,31 +80,31 @@ Through this project, I learned:
 
 Clone the repository:
 
-```bash id="4wjlwm"
+```bash id="84r6tx"
 git clone <your-repo-url>
 ```
 
 Install dependencies:
 
-```bash id="6jlwmx"
+```bash id="xq83a1"
 npm install
 ```
 
 Create a `.env` file:
 
-```env id="hjlwm1"
+```env id="uh9rxt"
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
 
 Start the server:
 
-```bash id="jlwm7o"
+```bash id="0b4n7s"
 npm run dev
 ```
 
 Server runs on:
 
-```text id="jlwm0f"
+```text id="h6w0rk"
 http://localhost:3001
 ```
