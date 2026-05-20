@@ -9,9 +9,12 @@ connectDB();
 
 const app=express();
 
-app.use(express.json());
 
-app.use("/employees",emplyeeRoutes);
+app.use(express.json());
+const authRoutes=require("./routes/authRoutes");
+app.use("/auth",authRoutes)
+app.use("/employees",employeeRoutes);
+
 
 const PORT=process.env.PORT||3001;
 

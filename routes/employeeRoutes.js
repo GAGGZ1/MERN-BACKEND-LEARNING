@@ -8,12 +8,14 @@ const {
   deleteEmployee
 } = require("../controllers/employeeController");
 
+const authMiddleware=require("../middleware/authMiddleware");
+
 const {body}=require("express-validator");
 const validate = require("../middleware/validate");
 
 const router = express.Router();
 
-router.get("/", getEmployees);
+router.get("/",authMiddleware, getEmployees); // now only authenticated users can access employees
 
 router.get("/:id", getEmployeeById);
 
