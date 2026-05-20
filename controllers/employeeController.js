@@ -36,19 +36,22 @@ const getEmployeeById=async (req,res)=>{
 //create employee
 const createEmployees=async (req,res)=>{
 
-  try{  const {name,role,salary}=req.body;
-  const employee=await Employee.create({
-    
-    name,
-    role,
-    salary
-  });
-  res.status(201).json(employee);}
+  try{
+    const employee=await Employee.create(req.body);
+    res.status(201).json(employee);
+  }
   catch(error){
+    if(error.name==="ValidationError"){
+      const message=Object.values(error.errors).map(val=>val.message);
+      return res.status(400).json({
+        errors:message
+      });
+    }
     res.status(500).json({
-      message:error.messge
+      message:error.message
     })
   }
+  
   
 }
 
