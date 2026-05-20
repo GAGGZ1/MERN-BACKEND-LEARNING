@@ -1,3 +1,4 @@
+const Employee = require("../models/Employee");
 const employees=require("../models/Employee");
 
 //Get all employees
@@ -75,20 +76,24 @@ const updateEmployee=async (req,res)=>{
 };
 
 //Delete employee
-const deleteEmployee=(req,res)=>{
-  const id=parseInt(req.params.id);
+const deleteEmployee=async (req,res)=>{
+  try{
+const employee=await Employee.findByIdAndDelete(req.params.id);
+if(!employee){
+  return res.status(404).json({
+    message:"Employee not found"
+  })
 
-  const index=employees.findIndex(emp=>emp.id===id);
-
-  if(index===-1){
-    return res.status(404).json({
-      message:"Employee not found"
-    });
+}
+res.json({
+  message:"Employee deleted"
+})
   }
-  employees.splice(index,1);
-  res.json({
-    message:"Employee deleted"
-  });
+  catch(error){
+    res.status(500).json({
+      message:error.message
+    })
+  }
 }
 
 module.exports={
