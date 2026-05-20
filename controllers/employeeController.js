@@ -11,7 +11,7 @@ const getEmployees=async (req,res)=>{
     const skip=(page-1)*limit;
 
     //fetch paginated employees
-    const employees=await Employee.find().skip(skip).limit(limit);
+    const employees=await Employee.find().sort({createdAt:-1}).skip(skip).limit(limit); //sort to get newest employees first
 
     //total count
     const totalEmployees=await Employee.countDoucuments();
