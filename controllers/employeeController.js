@@ -1,5 +1,5 @@
 const Employee = require("../models/Employee");
-const employees=require("../models/Employee");
+
 
 //Get all employees
 const getEmployees=async (req,res)=>{
@@ -9,7 +9,7 @@ const getEmployees=async (req,res)=>{
   }
   catch(error){
     res.status(500).json({
-      message:"error.message"
+      message:error.message
     })
   }
 };

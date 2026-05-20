@@ -9,6 +9,7 @@ const {
 } = require("../controllers/employeeController");
 
 const {body}=require("express-validator");
+const validate = require("../middleware/validate");
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.post("/", [
   body("name").notEmpty().withMessage("Name is required"),
   body("role").notEmpty().withMessage("Role is required"),
   body("salary").isNumeric().withMessage("Salary must be number")
-],createEmployees);
+],validate,createEmployees);
 
 router.put("/:id", updateEmployee);
 
