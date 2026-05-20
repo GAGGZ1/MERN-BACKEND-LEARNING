@@ -4,6 +4,7 @@ const {registerUser,loginUser}=require("../controllers/authController");;
 
 const router =express.Router();
 
+router.post("/refresh-token",refreshAccessToken);
 router.post("/register",registerUser);
 router.post("/login",loginUser);
 

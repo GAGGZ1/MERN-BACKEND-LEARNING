@@ -1,7 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const User=require("../models/User")
+const generateAccessToken=require("../utils/generateToken");
 // Register User
 const registerUser = async (req, res) => {
 
@@ -85,6 +86,34 @@ const loginUser = async (req, res) => {
 
   }
 };
+
+//Refresh Token API
+const refreshAccessToken=async(req,res,next)=>{
+  try{
+    const {refreshToken}=req.body;
+    if(!refreshToken){
+      return res.status(401).json({
+        message:"Refresh token required"
+      });
+    }
+    const decoded=jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET);
+
+    const user=await User.findById(decoded.id);
+    if(!user || user.refreshToken!==refreshToken){
+      return res.status(402).json({
+        message:"Invalid refresh token"
+      });
+    }
+    //generate new access token
+    const accessToken=generateAccessToken(user);
+    res.json({accessToken});
+  }
+  catch(error){
+    next(error);
+  }
+
+
+}
 
 module.exports = {
   registerUser,
