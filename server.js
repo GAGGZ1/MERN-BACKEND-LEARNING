@@ -1,28 +1,34 @@
-const express=require("express");
-const dotenv=require("dotenv");
-const emplyeeRoutes=require("./routes/employeeRoutes");
-const connectDB=require("./config/db");
-const loggerMiddleware=require("./middleware/loggerMiddleware");
-const errorMiddleware=require("./middleware/errorMiddleware");
+const express = require("express");
+const dotenv = require("dotenv");
 
-app.use(errorMiddleware);
-app.use(loggerMiddleware);
+const employeeRoutes = require("./routes/employeeRoutes");
+const authRoutes = require("./routes/authRoutes");
+
+const connectDB = require("./config/db");
+
+const loggerMiddleware = require("./middleware/loggerMiddleware");
+const errorMiddleware = require("./middleware/errorMiddleware");
 
 dotenv.config();
 
 connectDB();
 
-const app=express();
+const app = express();
 
-
+// Middleware
 app.use(express.json());
-const authRoutes=require("./routes/authRoutes");
-app.use("/auth",authRoutes)
-app.use("/employees",employeeRoutes);
 
+app.use(loggerMiddleware);
 
-const PORT=process.env.PORT||3001;
+// Routes
+app.use("/auth", authRoutes);
+app.use("/employees", employeeRoutes);
 
-app.listen(PORT,()=>{
+// Error middleware should be last
+app.use(errorMiddleware);
+
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-})
+});
