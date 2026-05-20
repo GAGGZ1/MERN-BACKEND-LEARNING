@@ -42,17 +42,13 @@ const getEmployeeById=async (req,res)=>{
   try{
     const employee =await Employee.findById(req.params.id);
     if(!employee){
-      return res.status(404).json({
-        message:"Employee not found"
-      })
+      return res.status(404);
+      throw new Error("Employee not found");
     }
     res.json(employee)
   }
   catch(error){
-    res.status(500).json({
-      message:error.message
-    })
-
+    next(error);
   }
 }
 
