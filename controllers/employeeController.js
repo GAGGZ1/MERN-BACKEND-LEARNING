@@ -1,5 +1,5 @@
 const Employee = require("../models/Employee");
-
+const asyncHandler=require("express-async-handler");
 
 //Get all employees
 const getEmployees=async (req,res)=>{
@@ -38,19 +38,12 @@ const getEmployees=async (req,res)=>{
 };
 
 //get employee by ID
-const getEmployeeById=async (req,res)=>{
-  try{
-    const employee =await Employee.findById(req.params.id);
-    if(!employee){
-      return res.status(404);
-      throw new Error("Employee not found");
-    }
-    res.json(employee)
+const getEmployeeById=asyncHandler(
+  async (req,res)=>{
+    const employees=await Employee.find();
+    res.json(employees);
   }
-  catch(error){
-    next(error);
-  }
-}
+)
 
 //create employee
 const createEmployees=async (req,res)=>{
