@@ -4,8 +4,23 @@ const Employee = require("../models/Employee");
 //Get all employees
 const getEmployees=async (req,res)=>{
   try{
-    const employees=await Employee.find();
-    res.json(employees);
+    const page=parseInt(req.params.page) || 1;
+    const limit=parseInt(req.params.limit) || 5;
+
+    //calculate skip
+    const skip=(page-1)*limit;
+
+    //fetch paginated employees
+    const employees=await Employee.find().skip(skip).limit(limit);
+
+    //total count
+    const totalEmployees=await Employee.countDoucuments();
+    res.status(200).json({
+      currrentPage:page,
+      totalPage:Math.cell(totalEmployees/limit),
+      totalEmployees,
+      employees
+    });
   }
   catch(error){
     res.status(500).json({
