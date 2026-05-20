@@ -1,39 +1,50 @@
 const Employee = require("../models/Employee");
 const asyncHandler=require("express-async-handler");
+const employeeService=require("../services/employeeService");
 
 //Get all employees
-const getEmployees=async (req,res)=>{
+const getEmployees=async (req,res,next)=>{
   try{
     const page=parseInt(req.query.page) || 1;
     const limit=parseInt(req.query.limit) || 5;
      const search = req.query.search || "";
 
-    //calculate skip
-    const skip=(page-1)*limit;
+     const result=await await employeeService.getEmployees(page,limit);
 
-     const query = {
-      name: {
-        $regex: search,
-        $options: "i" //case insensitive
-      }
-    };
+    // //calculate skip
+    // const skip=(page-1)*limit;
 
-    //fetch paginated employees
-    const employees=await Employee.find(query).sort({createdAt:-1}).skip(skip).limit(limit); //sort to get newest employees first
+    //  const query = {
+    //   name: {
+    //     $regex: search,
+    //     $options: "i" //case insensitive
+    //   }
+    // };
 
-    //total count
-    const totalEmployees=await Employee.countDocuments(query);
-    res.status(200).json({
-      currrentPage:page,
-      totalPage:Math.ceil(totalEmployees/limit),
-      totalEmployees,
-      employees
+    // //fetch paginated employees
+    // const employees=await Employee.find(query).sort({createdAt:-1}).skip(skip).limit(limit); //sort to get newest employees first
+
+    // //total count
+    // const totalEmployees=await Employee.countDocuments(query);
+    // res.status(200).json({
+    //   currrentPage:page,
+    //   totalPage:Math.ceil(totalEmployees/limit),
+    //   totalEmployees,
+    //   employees
+    // });
+
+    res.json({
+      currentPage:page,
+      totalPage:Math.ceil(result.employees/limit),
+      totalEmployees:result.totalEmployees,
+      employees:result.employees
     });
   }
   catch(error){
-    res.status(500).json({
-      message:error.message
-    })
+    // res.status(500).json({
+    //   message:error.message
+    // })
+    next(error);
   }
 };
 
