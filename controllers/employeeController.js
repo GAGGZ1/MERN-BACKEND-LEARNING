@@ -1,39 +1,53 @@
-const employees=require("../data/employees");
+const employees=require("../models/Employee");
 
 //Get all employees
-const getEmployees=(req,res)=>{
-  res.json(employees);
+const getEmployees=async (req,res)=>{
+  try{
+    const employees=await Employee.find();
+    res.json(employees);
+  }
+  catch(error){
+    res.status(500).json({
+      message:"error.message"
+    })
+  }
 };
 
 //get employee by ID
-const getEmployeeById=(req,res)=>{
-  const id=parseInt(req.params.id);
-  const employee=employees.find(emp=>emp.id===id);
-
-  if(!employee){
-    return res.status(404).json({
-      message:"Employee not found"
-    });
+const getEmployeeById=async (req,res)=>{
+  try{
+    const employee =await Employee.findById(req.params.id);
+    if(!employee){
+      return res.status(404).json({
+        message:"Employee not found"
+      })
+    }
+    res.json(employee)
   }
-  res.json(employee);
+  catch(error){
+    res.status(500).json({
+      message:error.message
+    })
+
+  }
 }
 
 //create employee
-const createEmployees=(req,res)=>{
-  const {name,role,salary}=req.body;
-  const newEmployee={
-    id:employees.length+1,
+const createEmployees=async (req,res)=>{
+
+  try{  const {name,role,salary}=req.body;
+  const employee=await Employee.create({
+    
     name,
     role,
     salary
-  };
-
-  employees.push(newEmployee);
-
-  res.status(201).json({
-    message:"Employee created",
-    employees:newEmployee
   });
+  res.status(201).json(employee);}
+  catch(error){
+    res.status(500).json({
+      message:error.messge
+    })
+  }
   
 }
 
