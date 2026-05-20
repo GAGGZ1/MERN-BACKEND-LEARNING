@@ -9,6 +9,7 @@ const {
 } = require("../controllers/employeeController");
 
 const authMiddleware=require("../middleware/authMiddleware");
+const authorizeRoles=require("../middleware/roleMiddleware")
 
 const {body}=require("express-validator");
 const validate = require("../middleware/validate");
@@ -27,6 +28,6 @@ router.post("/", [
 
 router.put("/:id", updateEmployee);
 
-router.delete("/:id", deleteEmployee);
+router.delete("/:id",authMiddleware,authorizeRoles("admin"), deleteEmployee);
 
 module.exports = router;
